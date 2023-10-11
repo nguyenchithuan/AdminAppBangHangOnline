@@ -5,14 +5,34 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import edu.wkd.adminappbanghangonline.R;
+import edu.wkd.adminappbanghangonline.data.api.ApiService;
+import edu.wkd.adminappbanghangonline.databinding.FragmentHomeBinding;
+import edu.wkd.adminappbanghangonline.model.obj.Product;
+import edu.wkd.adminappbanghangonline.model.response.ProductResponse;
+import edu.wkd.adminappbanghangonline.ultil.CheckConection;
+import edu.wkd.adminappbanghangonline.ultil.ProgressDialogLoading;
+import edu.wkd.adminappbanghangonline.view.adapter.ProductAdapter;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
+    private FragmentHomeBinding binding;
+    private List<Product> listProduct;
+    private ProductAdapter productAdapter;
+    private ProgressDialogLoading dialogLoading;
 
     public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
@@ -27,11 +47,66 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        binding = FragmentHomeBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initView();
+        initController();
+        getListProduct();
+        callApiGetProduct();
     }
+
+    private void initController() {
+        binding.btnAdd.setOnClickListener(view -> {
+            Toast.makeText(getActivity(), "Thêm", Toast.LENGTH_SHORT).show();
+        });
+    }
+
+    private void getListProduct() {
+        listProduct = new ArrayList<>();
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(),
+                2, GridLayoutManager.VERTICAL, false);
+        binding.rcvProduct.setLayoutManager(gridLayoutManager);
+        binding.rcvProduct.setHasFixedSize(true);
+        productAdapter = new ProductAdapter(getActivity(), listProduct);
+        binding.rcvProduct.setAdapter(productAdapter);
+    }
+
+    private void callApiGetProduct(){
+        dialogLoading.show();
+        ApiService.apiService.getListProduct().enqueue(new Callback<ProductResponse>() {
+            @Override
+            public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
+                if (response.isSuccessful()) {
+                    Log.d("zzzz", "onResponse-product-error: " + response.body());
+                    ProductResponse productResponse = response.body();
+                    if (productResponse.isSuccess()) {
+                        productAdapter.setListProduct(productResponse.getResult()); // set dữ liệu lên rcv
+                    } else {
+                        CheckConection.ShowToast(getContext(), "Load danh sách sản phẩm lỗi!");
+                    }
+                    dialogLoading.cancel();
+                } else {
+                    CheckConection.ShowToast(getContext(), "Không có dữ liệu trả về");
+                    dialogLoading.cancel();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProductResponse> call, Throwable t) {
+                Log.d("zzzz", "onResponse-product-error: " + t.toString());
+                Toast.makeText(getActivity(), t.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void initView() {
+        dialogLoading = new ProgressDialogLoading(getActivity());
+    }
+    
 }

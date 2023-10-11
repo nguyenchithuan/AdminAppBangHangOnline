@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         binding.bottomNavigation.add(new MeowBottomNavigation.Model(2, R.drawable.ic_notification));
         binding.bottomNavigation.add(new MeowBottomNavigation.Model(3, R.drawable.ic_account));
         binding.bottomNavigation.show(1, true);
+        chooseFragment(HomeFragment.newInstance());
 
         binding.bottomNavigation.setOnClickMenuListener(new Function1<MeowBottomNavigation.Model, Unit>() {
             @Override
