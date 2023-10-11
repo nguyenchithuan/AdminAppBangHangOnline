@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.activity.CrudProductActivity"
+    android:background="@color/white"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/constraintLayout"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="25dp"
+        android:paddingHorizontal="18dp"
+        >
+        <ImageView
+            android:id="@+id/imgBack"
+            app:tint="@color/primary"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/left_arrow"
+            android:padding="2dp"
+            android:src="@drawable/left_arrow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thêm sản phẩm"
+            android:textColor="@color/primary"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/constraintLayout"
+        app:layout_constraintBottom_toTopOf="@id/btnSave"
+        android:background="@color/bg_line_gray"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:padding="10dp"
+            >
+            <RelativeLayout
+                android:id="@+id/btnImgProduct"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                >
+                <ImageView
+                    android:id="@+id/imgProduct"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    />
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_download"
+                    android:layout_centerInParent="true"
+                    />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tvIdProduct"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Id sản phẩm :"
+                android:textColor="@color/primary"
+                android:textStyle="bold"
+                android:visibility="visible"
+                android:layout_marginTop="15dp"
+                android:textSize="15sp" />
+
+            <Spinner
+                android:id="@+id/spnProductType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tên sản phẩm"
+                android:textColor="@color/primary"
+                android:textStyle="bold"
+                android:visibility="visible"
+                android:layout_marginTop="10dp"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/edName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:paddingVertical="10dp"
+                android:hint="Nhập tên sản phẩm"
+                android:textSize="15sp"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Giá sản phẩm"
+                android:textColor="@color/primary"
+                android:textStyle="bold"
+                android:visibility="visible"
+                android:layout_marginTop="10dp"
+                android:textSize="15sp" />
+            <EditText
+                android:id="@+id/edPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nhập giá sản phẩm"
+                android:paddingVertical="10dp"
+                android:inputType="number"
+                android:textSize="15sp"
+                android:background="@null"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Mô tả sản phẩm"
+                android:textColor="@color/primary"
+                android:textStyle="bold"
+                android:visibility="visible"
+                android:layout_marginTop="10dp"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/edDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nhập mô tả sản phẩm"
+                android:paddingVertical="10dp"
+                android:textSize="15sp"
+                android:background="@null"
+                />
+
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <TextView
+        android:id="@+id/btnSave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_btn_save"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:padding="20dp"
+        android:textSize="18sp"
+        android:text="Save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

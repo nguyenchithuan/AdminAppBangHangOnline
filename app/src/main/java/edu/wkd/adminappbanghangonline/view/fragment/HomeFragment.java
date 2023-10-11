@@ -1,5 +1,8 @@
 package edu.wkd.adminappbanghangonline.view.fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,14 +24,17 @@ import edu.wkd.adminappbanghangonline.data.api.ApiService;
 import edu.wkd.adminappbanghangonline.databinding.FragmentHomeBinding;
 import edu.wkd.adminappbanghangonline.model.obj.Product;
 import edu.wkd.adminappbanghangonline.model.response.ProductResponse;
+import edu.wkd.adminappbanghangonline.model.response.ServerResponse;
 import edu.wkd.adminappbanghangonline.ultil.CheckConection;
+import edu.wkd.adminappbanghangonline.ultil.ProductInterface;
 import edu.wkd.adminappbanghangonline.ultil.ProgressDialogLoading;
+import edu.wkd.adminappbanghangonline.view.activity.CrudProductActivity;
 import edu.wkd.adminappbanghangonline.view.adapter.ProductAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements ProductInterface {
     private FragmentHomeBinding binding;
     private List<Product> listProduct;
     private ProductAdapter productAdapter;
@@ -61,19 +67,13 @@ public class HomeFragment extends Fragment {
         callApiGetProduct();
     }
 
-    private void initController() {
-        binding.btnAdd.setOnClickListener(view -> {
-            Toast.makeText(getActivity(), "Thêm", Toast.LENGTH_SHORT).show();
-        });
-    }
-
     private void getListProduct() {
         listProduct = new ArrayList<>();
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(),
                 2, GridLayoutManager.VERTICAL, false);
         binding.rcvProduct.setLayoutManager(gridLayoutManager);
         binding.rcvProduct.setHasFixedSize(true);
-        productAdapter = new ProductAdapter(getActivity(), listProduct);
+        productAdapter = new ProductAdapter(getActivity(), listProduct, this);
         binding.rcvProduct.setAdapter(productAdapter);
     }
 
@@ -101,6 +101,7 @@ public class HomeFragment extends Fragment {
             public void onFailure(Call<ProductResponse> call, Throwable t) {
                 Log.d("zzzz", "onResponse-product-error: " + t.toString());
                 Toast.makeText(getActivity(), t.toString(), Toast.LENGTH_SHORT).show();
+                dialogLoading.cancel();
             }
         });
     }
@@ -108,5 +109,60 @@ public class HomeFragment extends Fragment {
     private void initView() {
         dialogLoading = new ProgressDialogLoading(getActivity());
     }
-    
+
+    private void initController() {
+        binding.btnAdd.setOnClickListener(view -> {
+            Intent intent = new Intent(getActivity(), CrudProductActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putInt("type", 0);
+            intent.putExtras(bundle);
+            startActivity(intent);
+        });
+    }
+
+    @Override
+    public void updateProduct(Product product) {
+        Intent intent = new Intent(getActivity(), CrudProductActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt("type", 1);
+        bundle.putSerializable("product", product);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
+    @Override
+    public void deleteProdcut(Product product) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Thông báo");
+        builder.setMessage("Bạn có muốn xóa không ?");
+        builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogLoading.show();
+                ApiService.apiService.deleteProduct(product.getId()).enqueue(new Callback<ServerResponse>() {
+                    @Override
+                    public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
+                        ServerResponse serverResponse = response.body();
+                        Log.d("zzzzz", "onResponse: " + serverResponse);
+                        Toast.makeText(getActivity(), "Xóa thành công!", Toast.LENGTH_SHORT).show();
+                        dialogLoading.cancel();
+                        callApiGetProduct();
+                    }
+
+                    @Override
+                    public void onFailure(Call<ServerResponse> call, Throwable t) {
+                        Log.d("zzzz", "onFailure: " + t.toString());
+                        Toast.makeText(getActivity(), "Xóa thất bại!", Toast.LENGTH_SHORT).show();
+                        dialogLoading.cancel();
+                    }
+                });
+            }
+        });
+        builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+            }
+        });
+        builder.show();
+    }
 }
