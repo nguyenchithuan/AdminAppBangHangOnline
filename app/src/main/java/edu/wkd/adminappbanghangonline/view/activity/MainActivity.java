@@ -13,6 +13,7 @@ import edu.wkd.adminappbanghangonline.R;
 import edu.wkd.adminappbanghangonline.databinding.ActivityMainBinding;
 import edu.wkd.adminappbanghangonline.view.fragment.HomeFragment;
 import edu.wkd.adminappbanghangonline.view.fragment.NotificationFragment;
+import edu.wkd.adminappbanghangonline.view.fragment.StatisticalFragment;
 import edu.wkd.adminappbanghangonline.view.fragment.UserFragment;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
@@ -35,8 +36,10 @@ public class MainActivity extends AppCompatActivity {
     private void onClickBottomNav() {
         binding.bottomNavigation.add(new MeowBottomNavigation.Model(1, R.drawable.ic_home));
         binding.bottomNavigation.add(new MeowBottomNavigation.Model(2, R.drawable.ic_notification));
-        binding.bottomNavigation.add(new MeowBottomNavigation.Model(3, R.drawable.ic_account));
+        binding.bottomNavigation.add(new MeowBottomNavigation.Model(3, R.drawable.baseline_bar_chart_24));
+        binding.bottomNavigation.add(new MeowBottomNavigation.Model(4, R.drawable.ic_account));
         binding.bottomNavigation.show(1, true);
+        chooseFragment(HomeFragment.newInstance());
 
         binding.bottomNavigation.setOnClickMenuListener(new Function1<MeowBottomNavigation.Model, Unit>() {
             @Override
@@ -49,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
                         chooseFragment(NotificationFragment.newInstance());
                         break;
                     case 3:
+                        chooseFragment(StatisticalFragment.newInstance());
                         break;
                     case 4:
                         chooseFragment(UserFragment.newInstance());
