@@ -19,9 +19,11 @@
         android:background="@color/white">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/left_arrow"/>
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/arrow_left_long"
+            app:tint="@color/primary"
+            android:id="@+id/arrowBack"/>
 
         <EditText
             android:layout_marginLeft="8dp"
