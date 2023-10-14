@@ -3,6 +3,7 @@ package edu.wkd.adminappbanghangonline.data.api;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import edu.wkd.adminappbanghangonline.model.response.OrderResponse;
 import edu.wkd.adminappbanghangonline.model.response.ProductResponse;
 import edu.wkd.adminappbanghangonline.model.response.ServerResponse;
 import okhttp3.MultipartBody;
@@ -49,5 +50,9 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("delete_product.php")
     Call<ServerResponse> deleteProduct(@Field("id_product") int idProduct);
+
+    //Lấy tất cả đơn hàng
+    @GET("get_all_orders.php")
+    Call<OrderResponse> getAllOrder();
 
 }

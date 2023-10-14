@@ -20,14 +20,17 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".view.activity.OrderActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.activity.CrudProductActivity"
             android:exported="false" />
         <activity
             android:name=".view.activity.UpdateProductActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".view.activity.AddProductActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".view.activity.MainActivity"
             android:exported="true">
