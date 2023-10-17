@@ -7,6 +7,12 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -19,32 +25,31 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".view.activity.CrudProductActivity"
-            android:exported="false" />
-        <activity
-            android:name=".view.activity.UpdateProductActivity"
-            android:exported="true"></activity>
-        <activity
-            android:name=".view.activity.AddProductActivity"
-            android:exported="true"></activity>
-        <activity
-            android:name=".view.activity.RevenueMonthActivity"
-            android:exported="false" />
-        <activity
-            android:name=".view.activity.MainActivity"
-            android:exported="true">
+            android:name=".view.activity.SignInActivity"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+        <activity
+            android:name=".view.activity.CrudProductActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.UpdateProductActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view.activity.AddProductActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view.activity.RevenueMonthActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.MainActivity"
+            android:exported="true">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+        </activity>
+    </application>
 
 </manifest>
