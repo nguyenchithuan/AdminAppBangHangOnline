@@ -5,6 +5,11 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
         <item name="android:windowLightStatusBar">true</item>
     </style>
+    <style name="Base.Theme.Dark" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <item name="colorPrimary">@color/black</item>
+    </style>
 
     <style name="Theme.AdminAppBangHangOnline" parent="Base.Theme.AdminAppBangHangOnline" />
+    <style name="Theme.Dark" parent="Base.Theme.Dark" />
 </resources>

@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder;
 import edu.wkd.adminappbanghangonline.model.response.ProductResponse;
 import edu.wkd.adminappbanghangonline.model.response.RevenueResponse;
 import edu.wkd.adminappbanghangonline.model.response.ServerResponse;
+import edu.wkd.adminappbanghangonline.model.response.UserResponse;
 import okhttp3.MultipartBody;
 
 import retrofit2.Call;
@@ -62,4 +63,9 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("delete_product.php")
     Call<ServerResponse> deleteProduct(@Field("id_product") int idProduct);
+
+    @FormUrlEncoded
+    @POST("login.php")
+    Call <UserResponse> loginUser(@Field("email") String email, @Field("password") String password);
+
 }
