@@ -1,12 +1,15 @@
 package edu.wkd.adminappbanghangonline.view.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import edu.wkd.adminappbanghangonline.databinding.LayoutItemOrderBinding;
@@ -17,11 +20,25 @@ import edu.wkd.adminappbanghangonline.model.obj.Product;
 
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>{
     private ArrayList<Order> list;
+    private Context context;
     private ArrayList<Product> listProduct;
     private ProductInOrderAdapter productAdapter;
+    public interface UpdateStatusInterface{
+        void updateStatus(int id, int status);
+    }
 
-    public OrderAdapter(ArrayList<Order> list) {
+    private UpdateStatusInterface updateStatusInterface;
+    public void setUpdateStatusInterface(UpdateStatusInterface updateStatusInterface){
+        this.updateStatusInterface = updateStatusInterface;
+    }
+
+    public OrderAdapter(Context context) {
+        this.context = context;
+    }
+
+    public void setData(ArrayList<Order> list){
         this.list = list;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -37,23 +54,47 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>{
         if (order == null){
             return;
         }
+
         holder.binding.tvUsernameInOrder.setText(order.getUsername());
         holder.binding.tvDateOrder.setText(order.getDateTime());
         //Hiển thị danh sách sản phẩm
         listProduct = order.getListProduct();
         productAdapter = new ProductInOrderAdapter(listProduct);
-        LinearLayoutManager manager = new LinearLayoutManager(holder.itemView.getContext(), LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager manager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         holder.binding.rvProductInOrder.setLayoutManager(manager);
         holder.binding.rvProductInOrder.setAdapter(productAdapter);
         if (order.getStatus() == 0){
             holder.binding.tvStatusOrder.setText("Chờ xác nhận");
+            holder.binding.btnChangeStatusOrder.setVisibility(View.VISIBLE);
         }else if(order.getStatus() == 1){
             holder.binding.tvStatusOrder.setText("Đang giao hàng");
+            holder.binding.btnChangeStatusOrder.setVisibility(View.VISIBLE);
         }else if(order.getStatus() == 2){
             holder.binding.tvStatusOrder.setText("Đã giao hàng");
+            holder.binding.btnChangeStatusOrder.setVisibility(View.INVISIBLE);
         }else if(order.getStatus() == 3){
             holder.binding.tvStatusOrder.setText("Đơn hàng đã bị hủy");
+            holder.binding.btnChangeStatusOrder.setVisibility(View.INVISIBLE);
         }
+
+        int totalPrice = 0, totalQuantityProduct = 0;
+        for(Product product : listProduct){
+            totalPrice += product.getPrice();
+            totalQuantityProduct += product.getQuantity();
+        }
+        holder.binding.tvIdOrder.setText("Đơn hàng số: "+order.getId());
+        holder.binding.tvAllProductInOrder.setText(totalQuantityProduct + " sản phẩm");
+        DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
+        holder.binding.tvAllPriceOrder.setText(decimalFormat.format(totalPrice)+"đ");
+
+        holder.binding.btnChangeStatusOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (updateStatusInterface != null){
+                    updateStatusInterface.updateStatus(order.getId(), order.getStatus());
+                }
+            }
+        });
     }
 
 
