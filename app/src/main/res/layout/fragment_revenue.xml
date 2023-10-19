@@ -41,16 +41,6 @@
             android:text="Thống kê theo tháng"
             android:background="@drawable/bg_item_top_product"
             />
-        <Button
-            android:id="@+id/btn_year"
-            android:layout_marginTop="30dp"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:text="Thống kê theo năm"
-            android:textColor="@color/border_switch"
-            android:background="@drawable/bg_item_top_product"
-            />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

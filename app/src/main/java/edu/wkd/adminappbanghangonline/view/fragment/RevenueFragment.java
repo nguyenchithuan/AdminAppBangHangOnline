@@ -185,13 +185,11 @@ public class RevenueFragment extends Fragment {
 
     private void setHideBtn() {
         binding.btnMonth.setVisibility(View.INVISIBLE);
-        binding.btnYear.setVisibility(View.INVISIBLE);
         binding.btnDay.setVisibility(View.INVISIBLE);
     }
 
     private void showHideBtn() {
         binding.btnMonth.setVisibility(View.VISIBLE);
-        binding.btnYear.setVisibility(View.VISIBLE);
         binding.btnDay.setVisibility(View.VISIBLE);
     }
 
