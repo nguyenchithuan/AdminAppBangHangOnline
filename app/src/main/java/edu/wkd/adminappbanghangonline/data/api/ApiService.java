@@ -6,8 +6,11 @@ import com.google.gson.GsonBuilder;
 import edu.wkd.adminappbanghangonline.model.obj.Order;
 import edu.wkd.adminappbanghangonline.model.response.OrderResponse;
 import edu.wkd.adminappbanghangonline.model.response.ProductResponse;
+import edu.wkd.adminappbanghangonline.model.response.RevenueResponse;
 import edu.wkd.adminappbanghangonline.model.response.ServerResponse;
+import edu.wkd.adminappbanghangonline.model.response.UserResponse;
 import okhttp3.MultipartBody;
+
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -17,6 +20,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+
 
 public interface ApiService {
     String URL_MAIN = "https://guyinterns2003.000webhostapp.com/";
@@ -29,6 +33,16 @@ public interface ApiService {
 
     @GET("get_product.php")
     Call<ProductResponse> getListProduct();
+
+    @GET("get_top_product.php")
+    Call<ProductResponse> getTopProduct();
+
+    @FormUrlEncoded
+    @POST("get_revenue_day.php")
+    Call<RevenueResponse> getRevenueDay(@Field("day_a") String dayA, @Field("day_b") String dayB); @FormUrlEncoded
+
+    @POST("get_revenue_month.php")
+    Call<RevenueResponse> getRevenueMonth(@Field("month") String month);
 
     @Multipart
     @POST("add_product.php")
@@ -60,5 +74,8 @@ public interface ApiService {
     @POST("update_order_status.php")
     Call<Order> updateStatusOrder(@Field("id_order") int idOrder, @Field("status") int status);
 
+    @FormUrlEncoded
+    @POST("login.php")
+    Call <UserResponse> loginUser(@Field("email") String email, @Field("password") String password);
 
 }
