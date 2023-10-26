@@ -10,6 +10,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,6 +67,7 @@ public class HomeFragment extends Fragment implements ProductInterface {
         initController();
         getListProduct();
         callApiGetProduct();
+        searchProduct();
     }
 
     private void getListProduct() {
@@ -164,5 +167,58 @@ public class HomeFragment extends Fragment implements ProductInterface {
             }
         });
         builder.show();
+    }
+
+    private void searchProduct() {
+        binding.edSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                //trước khi text thay đổi
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //trong khi text thay đổi
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                //Sau khi text thay đổi
+                getDataSearch();
+            }
+        });
+    }
+
+    private void getDataSearch() {
+        dialogLoading.show();
+        String product_name = binding.edSearch.getText().toString().trim();
+        if (!product_name.isEmpty()) { //nếu có dữ liệu mới search
+            ApiService.apiService.getProductSearch(product_name).enqueue(
+                    new Callback<ProductResponse>() {
+                        @Override
+                        public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
+                            if (response.isSuccessful()){
+                                ProductResponse productResponse = response.body();
+                                if (productResponse.isSuccess()){
+                                    productAdapter.setListProduct(productResponse.getResult()); // set dữ liệu lên rcv
+                                    dialogLoading.cancel();
+                                }else {
+                                    CheckConection.ShowToast(getContext(), "Không tìm thấy sản phẩm");
+                                    dialogLoading.cancel();
+                                }
+                            }else {
+                                dialogLoading.cancel();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ProductResponse> call, Throwable t) {
+
+                        }
+                    }
+            );
+        }else { // không thì trả về list sản phẩm ban đầu
+            getListProduct();
+        }
     }
 }

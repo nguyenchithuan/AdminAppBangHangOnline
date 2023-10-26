@@ -78,4 +78,11 @@ public interface ApiService {
     @POST("login.php")
     Call <UserResponse> loginUser(@Field("email") String email, @Field("password") String password);
 
+    @FormUrlEncoded
+    @POST("search_product.php")
+    Call<ProductResponse> getProductSearch(@Field("product_name") String product_name);
+
+    @FormUrlEncoded
+    @POST("update_token_admin.php")
+    Call<UserResponse> updateTokenAdmin(@Field("token_admin") String token, @Field("user_id") int userId);
 }
