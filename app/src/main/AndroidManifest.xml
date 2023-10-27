@@ -25,8 +25,14 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".view.activity.ChatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.ChatUserActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.activity.SignInActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -37,19 +43,11 @@
             android:name=".view.activity.CrudProductActivity"
             android:exported="false" />
         <activity
-            android:name=".view.activity.UpdateProductActivity"
-            android:exported="true" />
-        <activity
-            android:name=".view.activity.AddProductActivity"
-            android:exported="true" />
-        <activity
             android:name=".view.activity.RevenueMonthActivity"
             android:exported="false" />
         <activity
             android:name=".view.activity.MainActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true" />
     </application>
 
 </manifest>

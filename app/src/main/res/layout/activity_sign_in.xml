@@ -56,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/custom_bg_transparent"
                 android:id="@+id/edEmailOrPhoneNumberSignIn"
-                android:text="thuan@gmail.com"
+                android:text="admin@gmail.com"
                 android:theme="@style/Base.Theme.Dark"/>
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -83,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/custom_bg_transparent"
                 android:inputType="textPassword"
-                android:text="1234"
+                android:text="admin"
                 android:theme="@style/Base.Theme.Dark"/>
         </com.google.android.material.textfield.TextInputLayout>
 

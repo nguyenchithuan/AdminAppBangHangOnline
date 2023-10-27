@@ -28,6 +28,7 @@ import edu.wkd.adminappbanghangonline.model.response.ServerResponse;
 import edu.wkd.adminappbanghangonline.ultil.CheckConection;
 import edu.wkd.adminappbanghangonline.ultil.ProductInterface;
 import edu.wkd.adminappbanghangonline.ultil.ProgressDialogLoading;
+import edu.wkd.adminappbanghangonline.view.activity.ChatUserActivity;
 import edu.wkd.adminappbanghangonline.view.activity.CrudProductActivity;
 import edu.wkd.adminappbanghangonline.view.adapter.ProductAdapter;
 import retrofit2.Call;
@@ -116,6 +117,11 @@ public class HomeFragment extends Fragment implements ProductInterface {
             Bundle bundle = new Bundle();
             bundle.putInt("type", 0);
             intent.putExtras(bundle);
+            startActivity(intent);
+        });
+
+        binding.imgChat.setOnClickListener(view -> {
+            Intent intent = new Intent(getActivity(), ChatUserActivity.class);
             startActivity(intent);
         });
     }

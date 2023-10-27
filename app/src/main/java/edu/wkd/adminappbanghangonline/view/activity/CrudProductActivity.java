@@ -136,6 +136,8 @@ public class CrudProductActivity extends AppCompatActivity {
                 }
             });
         } else {
+            Log.d("zzzzz", "onResponse-image: " + strImage);
+            Log.d("zzzzz", "onResponse-image: " + fileToUpload);
             ApiService.apiService.updateProduct(fileToUpload, product.getId(), name, price, description, productType, strImage).enqueue(new Callback<ProductResponse>() {
                 @Override
                 public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
