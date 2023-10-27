@@ -131,7 +131,7 @@ public class ChatActivity extends AppCompatActivity {
     };
 
     private String formatDate(Date date) {
-        return new SimpleDateFormat("MMMM dd, yyyy-hh:mm a", Locale.getDefault()).format(date);
+        return new SimpleDateFormat("yyyy-hh:mm a", Locale.getDefault()).format(date);
     }
 
     private void initView() {

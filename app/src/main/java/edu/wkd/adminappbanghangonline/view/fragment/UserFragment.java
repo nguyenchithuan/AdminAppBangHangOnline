@@ -1,5 +1,6 @@
 package edu.wkd.adminappbanghangonline.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,9 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import edu.wkd.adminappbanghangonline.R;
+import edu.wkd.adminappbanghangonline.databinding.FragmentUserBinding;
+import edu.wkd.adminappbanghangonline.view.activity.OrderActivity;
 
 public class UserFragment extends Fragment {
-
+    private FragmentUserBinding binding;
     public static UserFragment newInstance() {
         UserFragment fragment = new UserFragment();
         return fragment;
@@ -28,11 +31,23 @@ public class UserFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user, container, false);
+        binding = FragmentUserBinding.inflate(getLayoutInflater());
+        return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        goToOrderActivity();
     }
+
+    private void goToOrderActivity() {
+        binding.btnGoToOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), OrderActivity.class));
+            }
+        });
+    }
+
 }

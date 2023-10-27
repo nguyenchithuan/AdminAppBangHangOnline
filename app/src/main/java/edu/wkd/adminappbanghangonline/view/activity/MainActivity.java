@@ -8,15 +8,22 @@ import android.os.Bundle;
 import android.view.WindowManager;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import edu.wkd.adminappbanghangonline.R;
+import edu.wkd.adminappbanghangonline.data.api.ApiService;
 import edu.wkd.adminappbanghangonline.databinding.ActivityMainBinding;
+import edu.wkd.adminappbanghangonline.model.response.UserResponse;
+import edu.wkd.adminappbanghangonline.ultil.UserUltil;
 import edu.wkd.adminappbanghangonline.view.fragment.HomeFragment;
 import edu.wkd.adminappbanghangonline.view.fragment.NotificationFragment;
 import edu.wkd.adminappbanghangonline.view.fragment.StatisticalFragment;
 import edu.wkd.adminappbanghangonline.view.fragment.UserFragment;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
@@ -29,8 +36,28 @@ public class MainActivity extends AppCompatActivity {
         //  transparent Status Bar
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-
+        getAndUpdateTokenFcm();
         onClickBottomNav();
+    }
+    public void getAndUpdateTokenFcm(){
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
+            if (!task.isSuccessful()){
+                return;
+            }
+            String token = task.getResult();
+            ApiService.apiService.updateTokenAdmin(token,UserUltil.user.getId())
+                    .enqueue(new Callback<UserResponse>() {
+                        @Override
+                        public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                            //nothing
+                        }
+
+                        @Override
+                        public void onFailure(Call<UserResponse> call, Throwable t) {
+
+                        }
+                    });
+        });
     }
 
     private void onClickBottomNav() {
